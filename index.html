@@ -628,28 +628,30 @@
 <header>
   <!-- SGN Brand -->
   <div class="sgn-brand">
-    <!-- SGN Geometric Icon -->
-    <svg viewBox="0 0 100 112" width="44" height="49" xmlns="http://www.w3.org/2000/svg" aria-label="SGN icon">
-      <!-- Outer octagon base -->
-      <polygon points="22,0 78,0 100,30 100,78 78,112 22,112 0,82 0,30" fill="#1e3d5e"/>
-      <!-- Upper-left light blue triangle -->
-      <polygon points="0,30 22,0 0,58" fill="#7dcfe8"/>
-      <!-- Top triangle – medium blue -->
-      <polygon points="22,0 78,0 50,34" fill="#3a82b8"/>
-      <!-- Upper-right dark navy -->
-      <polygon points="78,0 100,30 50,34" fill="#132f4e"/>
-      <!-- Right dark -->
-      <polygon points="100,30 100,78 50,34" fill="#132f4e"/>
-      <!-- Lower-right light blue -->
-      <polygon points="100,78 78,112 50,78" fill="#7dcfe8"/>
-      <!-- Bottom medium blue -->
-      <polygon points="22,112 78,112 50,78" fill="#3a82b8"/>
-      <!-- Lower-left dark -->
-      <polygon points="0,82 22,112 50,78" fill="#1a3550"/>
-      <!-- Left side -->
-      <polygon points="0,30 0,82 50,78 50,34" fill="#1e3d5e"/>
+    <!-- SGN Geometric Icon — faceted octagon matching brand -->
+    <svg viewBox="0 0 100 100" width="46" height="46" xmlns="http://www.w3.org/2000/svg" aria-label="SGN icon">
+      <!-- Slice 1: upper-left — large LIGHT BLUE (most distinctive brand element) -->
+      <polygon points="0,25 25,0 50,50" fill="#87ceeb"/>
+      <!-- Slice 10: left — also light blue, extends the upper-left area -->
+      <polygon points="0,75 0,25 50,50" fill="#87ceeb"/>
+      <!-- Slice 2: top — dark navy -->
+      <polygon points="25,0 75,0 50,50" fill="#1c3d5c"/>
+      <!-- Slice 3: upper-right — medium teal -->
+      <polygon points="75,0 100,25 50,50" fill="#2a7ab8"/>
+      <!-- Slice 4: right-upper fill -->
+      <polygon points="100,25 75,50 50,50" fill="#173355"/>
+      <!-- Slice 5: right arrow body (pointing right — key brand shape) -->
+      <polygon points="100,25 100,75 75,50" fill="#2471a3"/>
+      <!-- Slice 6: right-lower fill -->
+      <polygon points="100,75 75,50 50,50" fill="#173355"/>
+      <!-- Slice 7: lower-right — small LIGHT BLUE accent -->
+      <polygon points="100,75 75,100 50,50" fill="#87ceeb"/>
+      <!-- Slice 8: bottom — medium blue -->
+      <polygon points="75,100 25,100 50,50" fill="#2471a3"/>
+      <!-- Slice 9: lower-left — dark teal -->
+      <polygon points="25,100 0,75 50,50" fill="#1a4f7a"/>
       <!-- SGN text -->
-      <text x="50" y="72" font-family="Arial, Helvetica, sans-serif" font-weight="900" font-size="26" fill="#ffffff" text-anchor="middle" letter-spacing="-1">SGN</text>
+      <text x="50" y="57" font-family="'Arial Black', Arial, Helvetica, sans-serif" font-weight="900" font-size="24" fill="#ffffff" text-anchor="middle" dominant-baseline="middle">SGN</text>
     </svg>
     <div class="sgn-brand-divider"></div>
     <div class="sgn-brand-name">SMALL <em>GROUP</em> NETWORK</div>
