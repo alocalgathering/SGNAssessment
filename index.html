@@ -1,0 +1,1421 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Small Group Ministry Health Assessment</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Source+Sans+3:wght@300;400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #1a2744;
+    --navy-light: #243358;
+    --navy-dark: #111b30;
+    --orange: #e8620a;
+    --orange-light: #f07a2a;
+    --orange-pale: #fdf0e8;
+    --gold: #d4a843;
+    --cream: #faf8f5;
+    --white: #ffffff;
+    --gray-100: #f4f4f6;
+    --gray-200: #e8e8ec;
+    --gray-400: #9898a8;
+    --gray-600: #5a5a6e;
+    --gray-800: #2d2d3a;
+    --green: #2e7d52;
+    --yellow: #c9920a;
+    --red: #c0392b;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Source Sans 3', sans-serif;
+    background: var(--navy-dark);
+    color: var(--gray-800);
+    min-height: 100vh;
+  }
+
+  /* ── HEADER ── */
+  header {
+    background: var(--navy);
+    padding: 20px 32px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    border-bottom: 3px solid var(--orange);
+  }
+  .logo-mark {
+    width: 44px; height: 44px;
+    background: var(--orange);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Playfair Display', serif;
+    font-size: 22px; font-weight: 900;
+    color: white;
+    flex-shrink: 0;
+  }
+  .header-text h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 20px; font-weight: 700;
+    color: white; letter-spacing: 0.02em;
+  }
+  .header-text p {
+    font-size: 12px; color: var(--gold);
+    font-weight: 600; letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  /* ── MAIN CONTAINER ── */
+  .app-container {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 32px 16px 80px;
+  }
+
+  /* ── SCREENS ── */
+  .screen { display: none; }
+  .screen.active { display: block; }
+
+  /* ── WELCOME SCREEN ── */
+  .welcome-card {
+    background: var(--white);
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+  }
+  .welcome-hero {
+    background: linear-gradient(135deg, var(--navy) 0%, var(--navy-light) 100%);
+    padding: 48px 40px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .welcome-hero::before {
+    content: '';
+    position: absolute;
+    top: -40px; right: -40px;
+    width: 200px; height: 200px;
+    border-radius: 50%;
+    border: 3px solid rgba(232,98,10,0.2);
+  }
+  .welcome-hero::after {
+    content: '';
+    position: absolute;
+    bottom: -60px; left: -30px;
+    width: 160px; height: 160px;
+    border-radius: 50%;
+    border: 2px solid rgba(212,168,67,0.15);
+  }
+  .welcome-hero h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 36px; font-weight: 900;
+    color: white; line-height: 1.2;
+    margin-bottom: 12px;
+    position: relative; z-index: 1;
+  }
+  .welcome-hero h2 span { color: var(--orange-light); }
+  .welcome-hero p {
+    color: rgba(255,255,255,0.75);
+    font-size: 16px; line-height: 1.6;
+    max-width: 520px; margin: 0 auto;
+    position: relative; z-index: 1;
+  }
+  .welcome-body { padding: 40px; }
+  .welcome-body h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 20px; color: var(--navy);
+    margin-bottom: 20px;
+  }
+  .how-it-works {
+    display: grid; grid-template-columns: repeat(3,1fr); gap: 20px;
+    margin-bottom: 36px;
+  }
+  .how-step {
+    background: var(--gray-100);
+    border-radius: 10px; padding: 20px 16px;
+    text-align: center;
+  }
+  .step-num {
+    width: 32px; height: 32px;
+    background: var(--orange);
+    border-radius: 50%;
+    font-weight: 700; font-size: 14px;
+    color: white;
+    display: flex; align-items: center; justify-content: center;
+    margin: 0 auto 10px;
+  }
+  .how-step h4 { font-size: 13px; font-weight: 700; color: var(--navy); margin-bottom: 4px; }
+  .how-step p { font-size: 12px; color: var(--gray-600); line-height: 1.4; }
+
+  .mode-section { margin-bottom: 32px; }
+  .mode-section label {
+    display: block; font-weight: 700; font-size: 13px;
+    color: var(--navy); text-transform: uppercase;
+    letter-spacing: 0.08em; margin-bottom: 12px;
+  }
+  .mode-options { display: flex; gap: 12px; flex-wrap: wrap; }
+  .mode-option {
+    flex: 1; min-width: 180px;
+    border: 2px solid var(--gray-200);
+    border-radius: 10px; padding: 16px;
+    cursor: pointer; transition: all 0.2s;
+    background: white;
+  }
+  .mode-option:hover { border-color: var(--orange-light); }
+  .mode-option.selected {
+    border-color: var(--orange);
+    background: var(--orange-pale);
+  }
+  .mode-option h4 { font-size: 14px; font-weight: 700; color: var(--navy); }
+  .mode-option p { font-size: 12px; color: var(--gray-600); margin-top: 4px; }
+
+  .name-section { margin-bottom: 32px; }
+  .name-section label {
+    display: block; font-weight: 700; font-size: 13px;
+    color: var(--navy); text-transform: uppercase;
+    letter-spacing: 0.08em; margin-bottom: 10px;
+  }
+  .name-inputs { display: flex; gap: 12px; flex-wrap: wrap; }
+  .name-input-wrap { flex: 1; min-width: 160px; }
+  .name-input-wrap input {
+    width: 100%; padding: 12px 14px;
+    border: 2px solid var(--gray-200);
+    border-radius: 8px; font-size: 14px;
+    font-family: 'Source Sans 3', sans-serif;
+    transition: border-color 0.2s;
+    color: var(--gray-800);
+  }
+  .name-input-wrap input:focus { outline: none; border-color: var(--orange); }
+  .name-input-wrap span {
+    display: block; font-size: 11px;
+    color: var(--gray-400); margin-top: 4px;
+  }
+
+  .btn-primary {
+    background: var(--orange);
+    color: white; border: none;
+    padding: 16px 36px;
+    border-radius: 8px; font-size: 16px;
+    font-weight: 700; font-family: 'Source Sans 3', sans-serif;
+    cursor: pointer; transition: all 0.2s;
+    letter-spacing: 0.02em;
+  }
+  .btn-primary:hover { background: var(--orange-light); transform: translateY(-1px); box-shadow: 0 4px 16px rgba(232,98,10,0.35); }
+
+  .btn-secondary {
+    background: transparent; color: var(--navy);
+    border: 2px solid var(--navy);
+    padding: 12px 28px; border-radius: 8px;
+    font-size: 14px; font-weight: 700;
+    font-family: 'Source Sans 3', sans-serif;
+    cursor: pointer; transition: all 0.2s;
+  }
+  .btn-secondary:hover { background: var(--navy); color: white; }
+
+  /* ── ASSESSMENT SCREEN ── */
+  .assess-layout {
+    display: grid; grid-template-columns: 1fr 300px; gap: 24px; align-items: start;
+  }
+  @media (max-width: 700px) {
+    .assess-layout { grid-template-columns: 1fr; }
+    .assess-sidebar { order: -1; }
+    .how-it-works { grid-template-columns: 1fr; }
+  }
+
+  .progress-bar-wrap {
+    background: var(--navy);
+    border-radius: 12px; padding: 20px 24px;
+    margin-bottom: 20px;
+    display: flex; align-items: center; gap: 16px;
+  }
+  .progress-label { color: var(--gold); font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; white-space: nowrap; }
+  .progress-track { flex: 1; height: 6px; background: rgba(255,255,255,0.15); border-radius: 3px; }
+  .progress-fill { height: 100%; background: var(--orange); border-radius: 3px; transition: width 0.4s ease; }
+  .progress-count { color: white; font-size: 13px; font-weight: 700; white-space: nowrap; }
+
+  .question-card {
+    background: white; border-radius: 14px; padding: 32px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.12);
+  }
+  .q-category {
+    font-size: 11px; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 0.12em; color: var(--orange);
+    margin-bottom: 8px;
+  }
+  .q-number {
+    font-family: 'Playfair Display', serif;
+    font-size: 13px; color: var(--gray-400);
+    margin-bottom: 6px;
+  }
+  .q-text {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px; font-weight: 700; color: var(--navy);
+    line-height: 1.3; margin-bottom: 10px;
+  }
+  .q-subtext {
+    font-size: 14px; color: var(--gray-600);
+    line-height: 1.5; margin-bottom: 28px;
+    padding-bottom: 20px; border-bottom: 1px solid var(--gray-200);
+  }
+
+  .score-section { margin-bottom: 24px; }
+  .score-heading {
+    font-size: 12px; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 0.08em; color: var(--gray-600); margin-bottom: 14px;
+  }
+  .score-options { display: flex; gap: 10px; flex-wrap: wrap; }
+  .score-btn {
+    flex: 1; min-width: 52px;
+    border: 2px solid var(--gray-200);
+    border-radius: 10px; padding: 14px 8px;
+    cursor: pointer; transition: all 0.18s;
+    background: white; text-align: center;
+    display: flex; flex-direction: column; align-items: center; gap: 4px;
+  }
+  .score-btn:hover { border-color: var(--orange-light); background: var(--orange-pale); }
+  .score-btn.selected { border-color: var(--orange); background: var(--orange); }
+  .score-btn.selected .score-num { color: white; }
+  .score-btn.selected .score-desc { color: rgba(255,255,255,0.85); }
+  .score-num { font-family: 'Playfair Display', serif; font-size: 24px; font-weight: 900; color: var(--navy); }
+  .score-desc { font-size: 10px; font-weight: 600; color: var(--gray-400); text-transform: uppercase; letter-spacing: 0.06em; line-height: 1.2; }
+
+  /* team scorer */
+  .team-scorer { margin-bottom: 24px; }
+  .team-scorer-head {
+    font-size: 12px; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 0.08em; color: var(--gray-600); margin-bottom: 12px;
+  }
+  .team-member-row {
+    display: flex; align-items: center; gap: 12px;
+    margin-bottom: 10px;
+  }
+  .tm-name { font-size: 14px; font-weight: 600; color: var(--navy); min-width: 100px; }
+  .tm-scores { display: flex; gap: 6px; }
+  .tm-score-btn {
+    width: 36px; height: 36px;
+    border: 2px solid var(--gray-200);
+    border-radius: 6px; cursor: pointer;
+    background: white; font-size: 14px; font-weight: 700;
+    color: var(--navy); transition: all 0.15s;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .tm-score-btn:hover { border-color: var(--orange-light); }
+  .tm-score-btn.selected { background: var(--orange); border-color: var(--orange); color: white; }
+
+  .q-nav { display: flex; gap: 12px; align-items: center; }
+
+  /* ── SIDEBAR MINI CHART ── */
+  .assess-sidebar {}
+  .sidebar-card {
+    background: white; border-radius: 14px; padding: 20px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.12);
+    position: sticky; top: 20px;
+  }
+  .sidebar-card h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 16px; color: var(--navy); margin-bottom: 4px;
+  }
+  .sidebar-card p { font-size: 12px; color: var(--gray-400); margin-bottom: 16px; }
+  #mini-canvas { display: block; margin: 0 auto; }
+  .mini-legend { margin-top: 12px; }
+  .mini-legend-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; }
+  .mini-legend-label { font-size: 11px; color: var(--gray-600); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 160px; }
+  .mini-legend-score {
+    font-size: 12px; font-weight: 700;
+    width: 22px; height: 22px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    background: var(--gray-100); color: var(--gray-600);
+    flex-shrink: 0;
+  }
+  .mini-legend-score.s1 { background: #fde8e8; color: var(--red); }
+  .mini-legend-score.s2 { background: #fdf3e0; color: var(--yellow); }
+  .mini-legend-score.s3 { background: #e8f4ed; color: var(--green); }
+  .mini-legend-score.s4 { background: #d4eddf; color: var(--green); }
+  .mini-legend-score.s5 { background: var(--navy); color: white; }
+
+  /* ── RESULTS SCREEN ── */
+  .results-header {
+    background: linear-gradient(135deg, var(--navy) 0%, var(--navy-light) 100%);
+    border-radius: 16px 16px 0 0; padding: 40px;
+    text-align: center; color: white;
+  }
+  .results-header h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 32px; font-weight: 900; margin-bottom: 8px;
+  }
+  .results-header p { color: rgba(255,255,255,0.7); font-size: 15px; }
+  .results-body { background: white; border-radius: 0 0 16px 16px; padding: 40px; }
+
+  .overall-score-row {
+    display: flex; gap: 24px; margin-bottom: 40px;
+    flex-wrap: wrap; align-items: center; justify-content: center;
+  }
+  .overall-badge {
+    width: 120px; height: 120px; border-radius: 50%;
+    background: var(--navy);
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    flex-shrink: 0;
+    border: 4px solid var(--orange);
+  }
+  .overall-badge .big-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 40px; font-weight: 900; color: white;
+    line-height: 1;
+  }
+  .overall-badge .big-denom { font-size: 14px; color: var(--gold); font-weight: 600; }
+  .overall-text h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 24px; color: var(--navy); margin-bottom: 4px;
+  }
+  .overall-text p { font-size: 15px; color: var(--gray-600); max-width: 380px; line-height: 1.5; }
+
+  /* MAIN CHART */
+  .chart-section { text-align: center; margin-bottom: 40px; }
+  .chart-section h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 20px; color: var(--navy); margin-bottom: 20px;
+  }
+  #main-canvas { max-width: 100%; }
+
+  /* CATEGORY BANDS */
+  .categories-section { margin-bottom: 40px; }
+  .categories-section h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 20px; color: var(--navy); margin-bottom: 20px;
+  }
+  .category-bands { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+  @media (max-width: 600px) { .category-bands { grid-template-columns: 1fr; } }
+  .cat-band {
+    background: var(--gray-100); border-radius: 10px;
+    padding: 16px; border-left: 4px solid var(--gray-200);
+  }
+  .cat-band.strong { border-left-color: var(--green); }
+  .cat-band.developing { border-left-color: var(--gold); }
+  .cat-band.attention { border-left-color: var(--red); }
+  .cat-band-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+  .cat-band-title { font-size: 13px; font-weight: 700; color: var(--navy); }
+  .cat-band-score { font-size: 20px; font-weight: 900; font-family: 'Playfair Display', serif; color: var(--navy); }
+  .cat-bar-track { height: 6px; background: var(--gray-200); border-radius: 3px; overflow: hidden; }
+  .cat-bar-fill { height: 100%; border-radius: 3px; transition: width 0.6s ease; }
+  .cat-band.strong .cat-bar-fill { background: var(--green); }
+  .cat-band.developing .cat-bar-fill { background: var(--gold); }
+  .cat-band.attention .cat-bar-fill { background: var(--red); }
+  .cat-band-qs { margin-top: 8px; font-size: 11px; color: var(--gray-400); }
+
+  /* PRIORITIES TABLE */
+  .priorities-section { margin-bottom: 40px; }
+  .priorities-section h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 20px; color: var(--navy); margin-bottom: 8px;
+  }
+  .priorities-section p { font-size: 14px; color: var(--gray-600); margin-bottom: 20px; }
+  .priority-table { width: 100%; border-collapse: collapse; }
+  .priority-table th {
+    background: var(--navy); color: white;
+    font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em;
+    padding: 10px 14px; text-align: left;
+  }
+  .priority-table td { padding: 12px 14px; border-bottom: 1px solid var(--gray-200); font-size: 13px; }
+  .priority-table tr:last-child td { border-bottom: none; }
+  .priority-table tr:nth-child(even) td { background: var(--gray-100); }
+  .p-rank { font-family: 'Playfair Display', serif; font-size: 18px; font-weight: 900; color: var(--navy); }
+  .p-tag {
+    display: inline-block; font-size: 10px; font-weight: 700;
+    text-transform: uppercase; letter-spacing: 0.06em;
+    padding: 2px 8px; border-radius: 4px;
+  }
+  .p-tag.a { background: #fde8e8; color: var(--red); }
+  .p-tag.b { background: #fdf3e0; color: var(--yellow); }
+  .p-tag.c { background: #e8f4ed; color: var(--green); }
+
+  .score-dot {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 28px; height: 28px; border-radius: 50%;
+    font-size: 12px; font-weight: 700;
+  }
+  .score-dot.s1 { background: #fde8e8; color: var(--red); }
+  .score-dot.s2 { background: #fdf3e0; color: #b8860b; }
+  .score-dot.s3 { background: #e8f4ed; color: var(--green); }
+  .score-dot.s4 { background: #d4eddf; color: var(--green); }
+  .score-dot.s5 { background: var(--navy); color: white; }
+
+  .results-actions { display: flex; gap: 12px; flex-wrap: wrap; }
+
+  /* TEAM RESULTS */
+  .team-comparison { margin-bottom: 40px; }
+  .team-comparison h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 20px; color: var(--navy); margin-bottom: 20px;
+  }
+  .gap-row {
+    display: flex; align-items: center; gap: 10px;
+    padding: 10px 0; border-bottom: 1px solid var(--gray-200); flex-wrap: wrap;
+  }
+  .gap-label { font-size: 13px; color: var(--navy); flex: 1; min-width: 140px; }
+  .gap-scores { display: flex; gap: 6px; }
+  .gap-badge {
+    font-size: 12px; font-weight: 700;
+    padding: 2px 10px; border-radius: 10px;
+    background: var(--gray-100); color: var(--gray-600);
+  }
+
+  /* util */
+  .section-divider {
+    border: none; border-top: 1px solid var(--gray-200);
+    margin: 36px 0;
+  }
+
+  .hidden { display: none !important; }
+
+  /* ── PRINT ── */
+  @media print {
+    * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+
+    body { background: white !important; font-size: 11pt; }
+
+    header { background: #1a2744 !important; border-bottom: 3px solid #e8620a !important; padding: 14px 24px; }
+    header .header-text h1 { font-size: 16pt; }
+    header .header-text p { font-size: 9pt; }
+
+    /* hide everything except results */
+    #screen-welcome, #screen-assess, .results-actions { display: none !important; }
+    #screen-results { display: block !important; }
+
+    .app-container { padding: 0; max-width: 100%; }
+
+    /* results card flat */
+    #screen-results > div {
+      box-shadow: none !important;
+      border-radius: 0 !important;
+    }
+
+    .results-header {
+      background: #1a2744 !important;
+      border-radius: 0 !important;
+      padding: 24px 32px;
+      page-break-inside: avoid;
+    }
+    .results-header h2 { font-size: 22pt; }
+    .results-header p { font-size: 11pt; }
+
+    .results-body { padding: 24px 32px; }
+
+    /* overall score row */
+    .overall-score-row { margin-bottom: 24px; }
+    .overall-badge {
+      background: #1a2744 !important;
+      border: 3px solid #e8620a !important;
+    }
+    .overall-badge .big-num { font-size: 32pt; }
+    .overall-text h3 { font-size: 16pt; }
+    .overall-text p { font-size: 11pt; }
+
+    /* chart — center, keep big */
+    .chart-section { page-break-inside: avoid; margin-bottom: 24px; }
+    .chart-section h3 { font-size: 14pt; margin-bottom: 12px; }
+    #main-canvas { width: 480px !important; height: 480px !important; display: block; margin: 0 auto; }
+    #chart-tooltip { display: none !important; }
+    .chart-section > p { display: none; } /* hide "tap to see" hint */
+
+    /* legend grid — 4 columns on print */
+    #chart-legend {
+      grid-template-columns: repeat(4, 1fr) !important;
+      gap: 4px !important;
+      margin-top: 12px !important;
+      page-break-inside: avoid;
+    }
+    #chart-legend > div { padding: 4px 6px !important; }
+    #chart-legend span { font-size: 9pt !important; }
+
+    .section-divider { margin: 16px 0; border-top-color: #e8e8ec; }
+
+    /* category bands — 2 col */
+    .categories-section { page-break-inside: avoid; margin-bottom: 20px; }
+    .categories-section h3 { font-size: 14pt; margin-bottom: 10px; }
+    .category-bands { grid-template-columns: repeat(2,1fr) !important; gap: 10px !important; }
+    .cat-band { padding: 12px !important; }
+    .cat-band-title { font-size: 10pt; }
+    .cat-band-score { font-size: 16pt; }
+
+    /* team comparison */
+    .team-comparison { page-break-before: always; }
+    .team-comparison h3 { font-size: 14pt; margin-bottom: 10px; }
+
+    /* priority table */
+    .priorities-section { page-break-before: always; }
+    .priorities-section h3 { font-size: 14pt; margin-bottom: 6px; }
+    .priorities-section p { font-size: 10pt; margin-bottom: 12px; }
+    .priority-table { font-size: 9pt; }
+    .priority-table th { font-size: 8pt; padding: 7px 10px; background: #1a2744 !important; }
+    .priority-table td { padding: 8px 10px; }
+    .p-rank { font-size: 14pt; }
+    .p-tag { font-size: 8pt; padding: 1px 6px; }
+    .score-dot { width: 22px; height: 22px; font-size: 10pt; }
+
+    /* print footer */
+    .print-footer {
+      display: block !important;
+      margin-top: 32px;
+      padding-top: 12px;
+      border-top: 1px solid #e8e8ec;
+      font-size: 9pt;
+      color: #9898a8;
+      text-align: center;
+    }
+  }
+
+  .print-footer { display: none; }
+
+  .alert-box {
+    background: var(--orange-pale); border: 1px solid var(--orange-light);
+    border-radius: 8px; padding: 14px 18px; font-size: 13px;
+    color: var(--navy); margin-bottom: 20px;
+  }
+
+  /* Add member */
+  .add-member-row { display: flex; gap: 10px; align-items: center; margin-top: 8px; }
+  .add-member-row input {
+    flex: 1; padding: 10px 12px; border: 2px solid var(--gray-200);
+    border-radius: 8px; font-size: 14px; font-family: 'Source Sans 3', sans-serif;
+  }
+  .add-member-row input:focus { outline: none; border-color: var(--orange); }
+  .btn-add {
+    background: var(--navy); color: white; border: none;
+    padding: 10px 16px; border-radius: 8px; font-size: 13px; font-weight: 700;
+    cursor: pointer; transition: background 0.2s;
+    font-family: 'Source Sans 3', sans-serif;
+  }
+  .btn-add:hover { background: var(--navy-light); }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo-mark">S</div>
+  <div class="header-text">
+    <h1>Small Group Ministry Health Assessment</h1>
+    <p>Small Group Network · Planning Tool</p>
+  </div>
+</header>
+
+<!-- ══════════════════════════ WELCOME ══════════════════════════ -->
+<div class="app-container">
+
+  <div id="screen-welcome" class="screen active">
+    <div class="welcome-card">
+      <div class="welcome-hero">
+        <h2>How <span>Healthy</span> Is Your<br>Small Group Ministry?</h2>
+        <p>Answer 20 questions across five key dimensions. Your scores map to a visual bullseye so you can see — at a glance — where you're thriving and where to focus first.</p>
+      </div>
+      <div class="welcome-body">
+        <div class="how-it-works">
+          <div class="how-step"><div class="step-num">1</div><h4>Score Each Area</h4><p>Rate your ministry 1–5 across 20 planning questions</p></div>
+          <div class="how-step"><div class="step-num">2</div><h4>See Your Bullseye</h4><p>A radar chart reveals your ministry's shape at a glance</p></div>
+          <div class="how-step"><div class="step-num">3</div><h4>Get Your Plan</h4><p>Receive a prioritized action list for the next 12–18 months</p></div>
+        </div>
+
+        <div class="mode-section">
+          <label>Assessment Mode</label>
+          <div class="mode-options">
+            <div class="mode-option selected" onclick="selectMode('solo', this)">
+              <h4>Solo Leader</h4>
+              <p>One person completes the full assessment</p>
+            </div>
+            <div class="mode-option" onclick="selectMode('team', this)">
+              <h4>Leadership Team</h4>
+              <p>Multiple leaders score independently — see consensus & gaps</p>
+            </div>
+          </div>
+        </div>
+
+        <div id="solo-name-section" class="name-section">
+          <label>Your Name <span style="font-weight:400;text-transform:none;letter-spacing:0;color:var(--gray-400)">(optional)</span></label>
+          <div class="name-inputs">
+            <div class="name-input-wrap">
+              <input type="text" id="solo-name" placeholder="Pastor's name or role…">
+              <span>Used to personalize your results</span>
+            </div>
+            <div class="name-input-wrap">
+              <input type="text" id="church-name" placeholder="Church / ministry name…">
+              <span>Appears on your summary</span>
+            </div>
+          </div>
+        </div>
+
+        <div id="team-name-section" class="name-section hidden">
+          <label>Team Members</label>
+          <div id="team-members-list"></div>
+          <div class="add-member-row">
+            <input type="text" id="team-member-input" placeholder="Add team member name…" onkeydown="if(event.key==='Enter')addTeamMember()">
+            <button class="btn-add" onclick="addTeamMember()">+ Add</button>
+          </div>
+          <div style="margin-top:16px">
+            <div class="name-input-wrap">
+              <input type="text" id="church-name-team" placeholder="Church / ministry name…">
+            </div>
+          </div>
+        </div>
+
+        <button class="btn-primary" onclick="startAssessment()">Begin Assessment →</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════ ASSESSMENT ══════════════════════════ -->
+  <div id="screen-assess" class="screen">
+    <div class="progress-bar-wrap">
+      <span class="progress-label">Progress</span>
+      <div class="progress-track"><div class="progress-fill" id="progress-fill" style="width:0%"></div></div>
+      <span class="progress-count" id="progress-count">0 / 20</span>
+    </div>
+
+    <div class="assess-layout">
+      <div class="assess-main">
+        <div class="question-card">
+          <div class="q-category" id="q-category"></div>
+          <div class="q-number" id="q-number"></div>
+          <div class="q-text" id="q-text"></div>
+          <div class="q-subtext" id="q-subtext"></div>
+
+          <!-- SOLO -->
+          <div id="solo-scorer" class="score-section">
+            <div class="score-heading">How well is your ministry doing in this area?</div>
+            <div class="score-options" id="score-options"></div>
+          </div>
+
+          <!-- TEAM -->
+          <div id="team-scorer-wrap" class="team-scorer hidden">
+            <div class="team-scorer-head">Rate this area for each team member</div>
+            <div id="team-score-rows"></div>
+          </div>
+
+          <div class="q-nav">
+            <button class="btn-secondary" id="btn-prev" onclick="navigate(-1)">← Back</button>
+            <button class="btn-primary" id="btn-next" onclick="navigate(1)">Next →</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="assess-sidebar">
+        <div class="sidebar-card">
+          <h3>Ministry Snapshot</h3>
+          <p>Updates as you score</p>
+          <canvas id="mini-canvas" width="260" height="260"></canvas>
+          <div class="mini-legend" id="mini-legend"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════ RESULTS ══════════════════════════ -->
+  <div id="screen-results" class="screen">
+    <div style="background:white; border-radius:16px; overflow:hidden; box-shadow:0 20px 60px rgba(0,0,0,0.3);">
+      <div class="results-header">
+        <h2 id="results-title">Ministry Health Report</h2>
+        <p id="results-subtitle"></p>
+      </div>
+      <div class="results-body">
+
+        <div class="overall-score-row">
+          <div class="overall-badge">
+            <span class="big-num" id="overall-num">—</span>
+            <span class="big-denom">/ 100</span>
+          </div>
+          <div class="overall-text">
+            <h3 id="overall-label">—</h3>
+            <p id="overall-desc">—</p>
+          </div>
+        </div>
+
+        <div class="chart-section">
+          <h3>Ministry Health Bullseye</h3>
+          <div style="position:relative;display:inline-block;max-width:100%;">
+            <canvas id="main-canvas" width="560" height="560" style="cursor:pointer;max-width:100%;"></canvas>
+            <div id="chart-tooltip" style="display:none;position:absolute;background:var(--navy);color:white;padding:10px 14px;border-radius:8px;font-size:13px;max-width:220px;pointer-events:none;z-index:10;box-shadow:0 4px 16px rgba(0,0,0,0.3);">
+              <div id="tooltip-num" style="font-size:10px;opacity:0.6;margin-bottom:2px;"></div>
+              <div id="tooltip-title" style="font-weight:700;margin-bottom:2px;"></div>
+              <div id="tooltip-cat" style="font-size:11px;opacity:0.75;margin-bottom:4px;"></div>
+              <div id="tooltip-score" style="font-size:12px;color:var(--gold);"></div>
+            </div>
+          </div>
+          <p style="font-size:12px;color:var(--gray-400);margin-top:8px;">Tap any numbered dot to see the question</p>
+          <div id="chart-legend" style="display:grid;grid-template-columns:repeat(2,1fr);gap:6px;margin-top:20px;text-align:left;"></div>
+        </div>
+
+        <hr class="section-divider">
+
+        <div class="categories-section">
+          <h3>Results by Category</h3>
+          <div class="category-bands" id="category-bands"></div>
+        </div>
+
+        <hr class="section-divider">
+
+        <div id="team-comparison-section" class="team-comparison hidden">
+          <h3>Team Comparison</h3>
+          <div id="team-comparison-rows"></div>
+          <hr class="section-divider">
+        </div>
+
+        <div class="priorities-section">
+          <h3>Strategic Priority List</h3>
+          <p>Based on your scores, here are your top focus areas — ranked by gap from full health. Consider selecting 5–7 to pursue over the next 12–18 months.</p>
+          <table class="priority-table" id="priority-table">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Question</th>
+                <th>Category</th>
+                <th>Score</th>
+                <th>Priority</th>
+              </tr>
+            </thead>
+            <tbody id="priority-tbody"></tbody>
+          </table>
+        </div>
+
+        <hr class="section-divider">
+
+        <div class="results-actions">
+          <button class="btn-primary" onclick="window.print()">Print / Save PDF</button>
+          <button class="btn-secondary" onclick="restart()">Start Over</button>
+        </div>
+
+        <div class="print-footer">
+          Small Group Ministry Health Assessment &nbsp;·&nbsp; smallgroupnetwork.com &nbsp;·&nbsp; Based on <em>Planning Small Groups with Purpose</em> by Steve Gladen
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+// ══════════════════════════════════════════
+//  DATA
+// ══════════════════════════════════════════
+
+const CATEGORIES = [
+  { id: 'alignment',   label: 'Alignment & Communication',  color: '#1a2744', qs: [0,1,2,3] },
+  { id: 'discipleship',label: 'Discipleship & Development',  color: '#e8620a', qs: [4,5,6,7,8,9] },
+  { id: 'outreach',    label: 'Outreach & Evangelism',       color: '#d4a843', qs: [10,11,12,13,14,15] },
+  { id: 'sustainability',label: 'Vision & Sustainability',   color: '#2e7d52', qs: [16,17,18,19] },
+];
+
+const QUESTIONS = [
+  // Alignment
+  { short: 'Church Alignment',     text: 'How Will You Align Your Ministry with Other Church Leadership and Ministries?', sub: 'Consider how integrated your small group ministry is with the vision, priorities, and calendar of your overall church leadership.', cat: 0 },
+  { short: 'Communicating Value',  text: 'How Will You Communicate the Value of Groups to Your Church?',                 sub: 'Think about how consistently and creatively you are casting vision for small group life across your congregation.', cat: 0 },
+  { short: 'Connecting People',    text: 'What Is Your Plan for Connecting People into Groups?',                         sub: 'Evaluate your on-ramp systems — how easy is it for a new attendee to find and join a group?', cat: 0 },
+  { short: 'Measuring Progress',   text: 'How Will You Measure Your Progress?',                                          sub: 'Reflect on whether you have clear metrics and feedback loops to know if your ministry is actually growing in health.', cat: 0 },
+  // Discipleship
+  { short: 'Mature Disciples',     text: 'How Will You Define and Develop Mature Disciples?',                            sub: 'Does your ministry have a clear picture of what spiritual maturity looks like, and a pathway to get there?', cat: 1 },
+  { short: 'Group Life Outcomes',  text: 'What Outcomes Do You Want from Small Group Life?',                             sub: 'Are your groups producing transformation, or just attendance? What does a "successful" group look like?', cat: 1 },
+  { short: 'Leader Development',   text: 'How Will You Develop Leaders for Your Ministry?',                              sub: 'Assess your pipeline — are you actively identifying, training, and releasing new small group leaders?', cat: 1 },
+  { short: 'Leader Support',       text: 'What Support Resources Will Your Small Group Leaders Need?',                   sub: 'Do your leaders feel equipped and cared for, or are they left to figure it out on their own?', cat: 1 },
+  { short: 'Members to Leaders',   text: 'How Will You Develop Group Members into Leaders?',                             sub: 'Is there a clear pathway for a regular group member to grow into leading their own group?', cat: 1 },
+  { short: 'Subgrouping',          text: 'How Will Subgrouping Develop People?',                                        sub: 'Are you using intentional subgrouping and role distribution within groups to develop ownership and depth?', cat: 1 },
+  // Outreach
+  { short: 'Encourage Service',    text: 'How Will You Encourage People to Serve?',                                     sub: 'Are your group members being mobilized toward ministry and service, or are they primarily consumers?', cat: 2 },
+  { short: 'Groups Serving',       text: 'How Will You Create Opportunities for Groups to Serve?',                      sub: 'Do your groups serve together as a unit, creating shared mission and community outside the living room?', cat: 2 },
+  { short: 'Spiritual Awareness',  text: 'How Will You Promote Reach and Spiritual Awareness?',                         sub: 'Are your groups cultivating a heart for the lost and awareness of the spiritual needs around them?', cat: 2 },
+  { short: 'Global Outreach',      text: 'How Will You Engage Every Group in Global Outreach?',                         sub: 'Is there a realistic, consistent strategy to connect every group to global mission — not just interested individuals?', cat: 2 },
+  { short: 'Local Outreach',       text: 'How Will You Engage Every Group in Local Outreach?',                          sub: 'How actively are your groups serving and engaging the local community where they meet and live?', cat: 2 },
+  { short: 'Personal Evangelism',  text: 'How Will You Involve Every Group in Personal Evangelism?',                    sub: 'Are group members being trained and encouraged to share their faith with their personal networks?', cat: 2 },
+  // Sustainability
+  { short: 'Long-Term Success',    text: 'How Will You Ensure Your Ministry\'s Long-Term Success?',                     sub: 'Are you building structures, culture, and succession that can outlast any single leader or season?', cat: 3 },
+  { short: 'Celebrating Stories',  text: 'How Will You Celebrate Stories of Life Change to Reach Your Vision?',        sub: 'Do you regularly surface and share testimonies that reinforce what your ministry is working toward?', cat: 3 },
+  { short: 'Remaining True',       text: 'How Will You Remain True to Your Call?',                                      sub: 'As demands grow, how are you protecting the original mission and your own spiritual vitality as a leader?', cat: 3 },
+  { short: 'Worshipful Submission',text: 'How Will You Help Your Groups Cultivate an Attitude of Worshipful Submission?',sub: 'Are your groups oriented toward God — praying, worshipping, and surrendering collectively — not just studying?', cat: 3 },
+];
+
+const SCORE_LABELS = ['','Not Started','Early Stages','Developing','Consistent','Thriving'];
+
+// ══════════════════════════════════════════
+//  STATE
+// ══════════════════════════════════════════
+
+let mode = 'solo';
+let currentQ = 0;
+let soloScores = new Array(20).fill(0);
+let teamMembers = [];
+let teamScores = []; // teamScores[memberIdx][qIdx]
+
+// ══════════════════════════════════════════
+//  WELCOME
+// ══════════════════════════════════════════
+
+function selectMode(m, el) {
+  mode = m;
+  document.querySelectorAll('.mode-option').forEach(o => o.classList.remove('selected'));
+  el.classList.add('selected');
+  document.getElementById('solo-name-section').classList.toggle('hidden', m === 'team');
+  document.getElementById('team-name-section').classList.toggle('hidden', m === 'solo');
+}
+
+function addTeamMember() {
+  const inp = document.getElementById('team-member-input');
+  const name = inp.value.trim();
+  if (!name) return;
+  teamMembers.push(name);
+  teamScores.push(new Array(20).fill(0));
+  inp.value = '';
+  renderTeamList();
+}
+
+function removeTeamMember(i) {
+  teamMembers.splice(i, 1);
+  teamScores.splice(i, 1);
+  renderTeamList();
+}
+
+function renderTeamList() {
+  const el = document.getElementById('team-members-list');
+  el.innerHTML = teamMembers.map((n,i) =>
+    `<div style="display:flex;align-items:center;gap:10px;margin-bottom:8px;">
+      <span style="font-size:14px;color:var(--navy);font-weight:600;">${n}</span>
+      <button onclick="removeTeamMember(${i})" style="background:none;border:1px solid var(--gray-200);border-radius:4px;padding:2px 8px;cursor:pointer;color:var(--gray-600);font-size:12px;">×</button>
+    </div>`
+  ).join('');
+}
+
+function startAssessment() {
+  if (mode === 'team' && teamMembers.length < 2) {
+    alert('Please add at least 2 team members for team mode, or switch to Solo.');
+    return;
+  }
+  currentQ = 0;
+  soloScores = new Array(20).fill(0);
+  showScreen('screen-assess');
+  renderQuestion();
+  drawMiniChart();
+}
+
+// ══════════════════════════════════════════
+//  ASSESSMENT
+// ══════════════════════════════════════════
+
+function renderQuestion() {
+  const q = QUESTIONS[currentQ];
+  const cat = CATEGORIES[q.cat];
+
+  document.getElementById('q-category').textContent = cat.label;
+  document.getElementById('q-number').textContent = `Question ${currentQ + 1} of 20`;
+  document.getElementById('q-text').textContent = q.text;
+  document.getElementById('q-subtext').textContent = q.sub;
+
+  document.getElementById('progress-fill').style.width = (currentQ / 20 * 100) + '%';
+  document.getElementById('progress-count').textContent = `${currentQ} / 20`;
+  document.getElementById('btn-prev').style.visibility = currentQ === 0 ? 'hidden' : 'visible';
+  document.getElementById('btn-next').textContent = currentQ === 19 ? 'See Results →' : 'Next →';
+
+  if (mode === 'solo') {
+    document.getElementById('solo-scorer').classList.remove('hidden');
+    document.getElementById('team-scorer-wrap').classList.add('hidden');
+    renderSoloScorer();
+  } else {
+    document.getElementById('solo-scorer').classList.add('hidden');
+    document.getElementById('team-scorer-wrap').classList.remove('hidden');
+    renderTeamScorer();
+  }
+}
+
+function renderSoloScorer() {
+  const opts = document.getElementById('score-options');
+  opts.innerHTML = [1,2,3,4,5].map(v =>
+    `<button class="score-btn ${soloScores[currentQ]===v?'selected':''}" onclick="setSoloScore(${v})">
+      <span class="score-num">${v}</span>
+      <span class="score-desc">${SCORE_LABELS[v]}</span>
+    </button>`
+  ).join('');
+}
+
+function setSoloScore(v) {
+  soloScores[currentQ] = v;
+  renderSoloScorer();
+  drawMiniChart();
+}
+
+function renderTeamScorer() {
+  const rows = document.getElementById('team-score-rows');
+  rows.innerHTML = teamMembers.map((name, mi) =>
+    `<div class="team-member-row">
+      <span class="tm-name">${name}</span>
+      <div class="tm-scores">
+        ${[1,2,3,4,5].map(v =>
+          `<button class="tm-score-btn ${teamScores[mi][currentQ]===v?'selected':''}" onclick="setTeamScore(${mi},${v})">${v}</button>`
+        ).join('')}
+      </div>
+    </div>`
+  ).join('');
+}
+
+function setTeamScore(mi, v) {
+  teamScores[mi][currentQ] = v;
+  renderTeamScorer();
+  drawMiniChart();
+}
+
+function getEffectiveScores() {
+  if (mode === 'solo') return soloScores;
+  // average across team members
+  return QUESTIONS.map((_,qi) => {
+    const vals = teamMembers.map((_,mi) => teamScores[mi][qi]).filter(v => v > 0);
+    if (!vals.length) return 0;
+    return vals.reduce((a,b) => a+b, 0) / vals.length;
+  });
+}
+
+function navigate(dir) {
+  currentQ += dir;
+  if (currentQ < 0) currentQ = 0;
+  if (currentQ >= 20) {
+    showResults();
+    return;
+  }
+  renderQuestion();
+}
+
+// ══════════════════════════════════════════
+//  MINI CHART
+// ══════════════════════════════════════════
+
+function drawMiniChart() {
+  const canvas = document.getElementById('mini-canvas');
+  const ctx = canvas.getContext('2d');
+  const W = canvas.width, H = canvas.height;
+  const cx = W/2, cy = H/2, R = W/2 - 18;
+  const N = 20;
+  const scores = getEffectiveScores();
+
+  ctx.clearRect(0,0,W,H);
+
+  // grid rings
+  for (let ring = 1; ring <= 5; ring++) {
+    ctx.beginPath();
+    for (let i = 0; i < N; i++) {
+      const angle = (i / N) * Math.PI * 2 - Math.PI / 2;
+      const r = (ring / 5) * R;
+      const x = cx + Math.cos(angle) * r;
+      const y = cy + Math.sin(angle) * r;
+      i === 0 ? ctx.moveTo(x,y) : ctx.lineTo(x,y);
+    }
+    ctx.closePath();
+    ctx.strokeStyle = ring === 5 ? '#cbd5e0' : '#e2e8f0';
+    ctx.lineWidth = ring === 5 ? 1.5 : 1;
+    ctx.stroke();
+  }
+
+  // spokes
+  for (let i = 0; i < N; i++) {
+    const angle = (i / N) * Math.PI * 2 - Math.PI / 2;
+    ctx.beginPath();
+    ctx.moveTo(cx, cy);
+    ctx.lineTo(cx + Math.cos(angle) * R, cy + Math.sin(angle) * R);
+    ctx.strokeStyle = '#e2e8f0';
+    ctx.lineWidth = 1;
+    ctx.stroke();
+  }
+
+  // category color arcs on outer ring
+  CATEGORIES.forEach(cat => {
+    cat.qs.forEach(qi => {
+      const angle = (qi / N) * Math.PI * 2 - Math.PI / 2;
+      const nextAngle = ((qi+1) / N) * Math.PI * 2 - Math.PI / 2;
+      ctx.beginPath();
+      ctx.arc(cx, cy, R+6, angle, nextAngle);
+      ctx.strokeStyle = cat.color;
+      ctx.lineWidth = 5;
+      ctx.stroke();
+    });
+  });
+
+  // data shape
+  ctx.beginPath();
+  for (let i = 0; i < N; i++) {
+    const angle = (i / N) * Math.PI * 2 - Math.PI / 2;
+    const r = (scores[i] / 5) * R;
+    const x = cx + Math.cos(angle) * r;
+    const y = cy + Math.sin(angle) * r;
+    i === 0 ? ctx.moveTo(x,y) : ctx.lineTo(x,y);
+  }
+  ctx.closePath();
+  ctx.fillStyle = 'rgba(232,98,10,0.18)';
+  ctx.fill();
+  ctx.strokeStyle = '#e8620a';
+  ctx.lineWidth = 2;
+  ctx.stroke();
+
+  // dots
+  for (let i = 0; i < N; i++) {
+    if (scores[i] === 0) continue;
+    const angle = (i / N) * Math.PI * 2 - Math.PI / 2;
+    const r = (scores[i] / 5) * R;
+    ctx.beginPath();
+    ctx.arc(cx + Math.cos(angle)*r, cy + Math.sin(angle)*r, 3, 0, Math.PI*2);
+    ctx.fillStyle = '#e8620a';
+    ctx.fill();
+  }
+
+  // mini legend (show current question category)
+  const legend = document.getElementById('mini-legend');
+  const answered = scores.filter(s => s > 0).length;
+  legend.innerHTML = CATEGORIES.map(cat => {
+    const catScores = cat.qs.map(qi => scores[qi]).filter(s => s > 0);
+    const avg = catScores.length ? (catScores.reduce((a,b)=>a+b,0)/catScores.length).toFixed(1) : '—';
+    const cls = avg === '—' ? '' : avg >= 4 ? 's5' : avg >= 3 ? 's4' : avg >= 2 ? 's3' : 's2';
+    return `<div class="mini-legend-row">
+      <span class="mini-legend-label" style="color:${cat.color}">${cat.label}</span>
+      <span class="mini-legend-score ${cls}">${avg}</span>
+    </div>`;
+  }).join('') + `<div style="font-size:11px;color:var(--gray-400);text-align:center;margin-top:8px;">${answered} / 20 answered</div>`;
+}
+
+// ══════════════════════════════════════════
+//  RESULTS
+// ══════════════════════════════════════════
+
+function showResults() {
+  const scores = getEffectiveScores();
+  const total = scores.reduce((a,b)=>a+b,0);
+  const pct = Math.round((total / 100) * 100);
+  const churchName = mode === 'solo'
+    ? document.getElementById('church-name').value || ''
+    : document.getElementById('church-name-team').value || '';
+  const leaderName = mode === 'solo'
+    ? document.getElementById('solo-name').value || ''
+    : '';
+
+  document.getElementById('results-title').textContent =
+    churchName ? `${churchName} — Health Report` : 'Small Group Ministry Health Report';
+  document.getElementById('results-subtitle').textContent =
+    leaderName ? `Completed by ${leaderName}` : 'Based on 20 planning questions';
+
+  document.getElementById('overall-num').textContent = total;
+  const { label, desc } = getOverallRating(total);
+  document.getElementById('overall-label').textContent = label;
+  document.getElementById('overall-desc').textContent = desc;
+
+  drawMainChart(scores);
+  setupChartTooltip(scores);
+  renderChartLegend(scores);
+  renderCategoryBands(scores);
+  renderPriorityTable(scores);
+
+  if (mode === 'team') {
+    renderTeamComparison();
+    document.getElementById('team-comparison-section').classList.remove('hidden');
+  }
+
+  showScreen('screen-results');
+}
+
+function getOverallRating(total) {
+  if (total >= 85) return { label: 'Thriving Ministry', desc: 'Your small group ministry is operating at a high level across most areas. Focus on sustaining momentum and developing the next generation of leaders.' };
+  if (total >= 65) return { label: 'Healthy & Growing', desc: 'Strong foundation with real momentum. A few focused areas of investment will take you to the next level.' };
+  if (total >= 45) return { label: 'Developing Ministry', desc: 'Good work is happening in key areas, but some foundational systems still need attention. Prioritize 5–7 goals for the next 18 months.' };
+  if (total >= 25) return { label: 'Early Stage', desc: 'You\'re building from the ground up — that\'s exactly where great ministries start. Be strategic, stay encouraged, and tackle your highest-priority areas first.' };
+  return { label: 'Needs Attention', desc: 'There\'s significant room to grow across the board. Start with alignment and communication — everything else flows from there.' };
+}
+
+function drawMainChart(scores) {
+  const canvas = document.getElementById('main-canvas');
+  const ctx = canvas.getContext('2d');
+  const W = canvas.width, H = canvas.height;
+  const cx = W/2, cy = H/2, R = W/2 - 60;
+  const N = 20;
+
+  ctx.clearRect(0,0,W,H);
+
+  // background
+  ctx.fillStyle = '#faf8f5';
+  ctx.fillRect(0,0,W,H);
+
+  // grid rings with labels
+  for (let ring = 1; ring <= 5; ring++) {
+    ctx.beginPath();
+    for (let i = 0; i < N; i++) {
+      const angle = (i / N) * Math.PI * 2 - Math.PI / 2;
+      const r = (ring / 5) * R;
+      const x = cx + Math.cos(angle) * r;
+      const y = cy + Math.sin(angle) * r;
+      i === 0 ? ctx.moveTo(x,y) : ctx.lineTo(x,y);
+    }
+    ctx.closePath();
+    ctx.strokeStyle = ring === 5 ? '#b0b8cc' : '#dde3ef';
+    ctx.lineWidth = ring === 5 ? 1.5 : 1;
+    if (ring < 5) { ctx.fillStyle = ring % 2 === 0 ? 'rgba(26,39,68,0.03)' : 'rgba(255,255,255,0.6)'; ctx.fill(); }
+    ctx.stroke();
+
+    // ring label
+    ctx.fillStyle = '#9898a8';
+    ctx.font = '10px Source Sans 3, sans-serif';
+    ctx.textAlign = 'left';
+    ctx.fillText(ring, cx + 4, cy - (ring/5)*R + 4);
+  }
+
+  // spokes
+  for (let i = 0; i < N; i++) {
+    const angle = (i / N) * Math.PI * 2 - Math.PI / 2;
+    ctx.beginPath();
+    ctx.moveTo(cx, cy);
+    ctx.lineTo(cx + Math.cos(angle) * R, cy + Math.sin(angle) * R);
+    ctx.strokeStyle = '#dde3ef';
+    ctx.lineWidth = 1;
+    ctx.stroke();
+  }
+
+  // category color arcs
+  CATEGORIES.forEach(cat => {
+    cat.qs.forEach(qi => {
+      const a1 = (qi / N) * Math.PI * 2 - Math.PI / 2;
+      const a2 = ((qi + 0.92) / N) * Math.PI * 2 - Math.PI / 2;
+      ctx.beginPath();
+      ctx.arc(cx, cy, R + 18, a1, a2);
+      ctx.strokeStyle = cat.color;
+      ctx.lineWidth = 8;
+      ctx.stroke();
+    });
+  });
+
+  // spoke numbers only
+  ctx.save();
+  for (let i = 0; i < N; i++) {
+    const angle = (i / N) * Math.PI * 2 - Math.PI / 2;
+    const labelR = R + 28;
+    const lx = cx + Math.cos(angle) * labelR;
+    const ly = cy + Math.sin(angle) * labelR;
+    const cat = CATEGORIES[QUESTIONS[i].cat];
+    ctx.beginPath();
+    ctx.arc(lx, ly, 10, 0, Math.PI*2);
+    ctx.fillStyle = cat.color;
+    ctx.fill();
+    ctx.fillStyle = 'white';
+    ctx.font = 'bold 9px sans-serif';
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.fillText(i+1, lx, ly);
+  }
+  ctx.restore();
+
+  // data shape
+  ctx.beginPath();
+  for (let i = 0; i < N; i++) {
+    const angle = (i / N) * Math.PI * 2 - Math.PI / 2;
+    const r = (scores[i] / 5) * R;
+    const x = cx + Math.cos(angle) * r;
+    const y = cy + Math.sin(angle) * r;
+    i === 0 ? ctx.moveTo(x,y) : ctx.lineTo(x,y);
+  }
+  ctx.closePath();
+  ctx.fillStyle = 'rgba(232,98,10,0.15)';
+  ctx.fill();
+  ctx.strokeStyle = '#e8620a';
+  ctx.lineWidth = 2.5;
+  ctx.stroke();
+
+  // score dots
+  for (let i = 0; i < N; i++) {
+    const angle = (i / N) * Math.PI * 2 - Math.PI / 2;
+    const r = (scores[i] / 5) * R;
+    const x = cx + Math.cos(angle) * r;
+    const y = cy + Math.sin(angle) * r;
+    ctx.beginPath();
+    ctx.arc(x, y, 5, 0, Math.PI * 2);
+    ctx.fillStyle = scores[i] >= 4 ? '#2e7d52' : scores[i] >= 3 ? '#d4a843' : '#c0392b';
+    ctx.fill();
+    ctx.strokeStyle = 'white';
+    ctx.lineWidth = 1.5;
+    ctx.stroke();
+  }
+
+  // center label
+  ctx.fillStyle = 'rgba(26,39,68,0.06)';
+  ctx.beginPath(); ctx.arc(cx,cy,28,0,Math.PI*2); ctx.fill();
+  ctx.fillStyle = '#1a2744';
+  ctx.font = 'bold 13px Playfair Display, serif';
+  ctx.textAlign = 'center';
+  const totalScore = scores.reduce((a,b)=>a+b,0);
+  ctx.fillText(totalScore, cx, cy+2);
+  ctx.font = '9px Source Sans 3, sans-serif';
+  ctx.fillStyle = '#9898a8';
+  ctx.fillText('/ 100', cx, cy+14);
+}
+
+function renderCategoryBands(scores) {
+  const el = document.getElementById('category-bands');
+  el.innerHTML = CATEGORIES.map(cat => {
+    const catScores = cat.qs.map(qi => scores[qi]);
+    const avg = catScores.reduce((a,b)=>a+b,0) / catScores.length;
+    const pct = (avg/5)*100;
+    const cls = avg >= 3.5 ? 'strong' : avg >= 2.5 ? 'developing' : 'attention';
+    const statusLabel = avg >= 3.5 ? 'Strong' : avg >= 2.5 ? 'Developing' : 'Needs Focus';
+    return `<div class="cat-band ${cls}">
+      <div class="cat-band-header">
+        <span class="cat-band-title">${cat.label}</span>
+        <span class="cat-band-score">${avg.toFixed(1)}</span>
+      </div>
+      <div class="cat-bar-track"><div class="cat-bar-fill" style="width:${pct}%"></div></div>
+      <div class="cat-band-qs">${cat.qs.length} questions · ${statusLabel}</div>
+    </div>`;
+  }).join('');
+}
+
+function renderPriorityTable(scores) {
+  // sort by score ascending (lowest = highest priority)
+  const ranked = QUESTIONS.map((q,i) => ({ q, i, score: scores[i] }))
+    .sort((a,b) => a.score - b.score || a.i - b.i);
+
+  const tbody = document.getElementById('priority-tbody');
+  tbody.innerHTML = ranked.map((item, rank) => {
+    const priority = rank < 7 ? 'A' : rank < 14 ? 'B' : 'C';
+    const cls = priority.toLowerCase();
+    const sCls = `s${Math.round(item.score) || 1}`;
+    const cat = CATEGORIES[item.q.cat];
+    return `<tr>
+      <td><span class="p-rank">${rank+1}</span></td>
+      <td style="font-weight:600;color:var(--navy);">${item.q.short}<br><span style="font-size:11px;color:var(--gray-400);font-weight:400;">${item.q.text}</span></td>
+      <td style="color:${cat.color};font-size:12px;font-weight:700;">${cat.label}</td>
+      <td><span class="score-dot ${sCls}">${item.score || '—'}</span></td>
+      <td><span class="p-tag ${cls}">${priority}</span></td>
+    </tr>`;
+  }).join('');
+}
+
+function renderTeamComparison() {
+  const el = document.getElementById('team-comparison-rows');
+  el.innerHTML = QUESTIONS.map((q,qi) => {
+    const memberScores = teamMembers.map((_,mi) => teamScores[mi][qi]);
+    const min = Math.min(...memberScores.filter(s=>s>0));
+    const max = Math.max(...memberScores.filter(s=>s>0));
+    const gap = max - min;
+    const gapColor = gap >= 3 ? 'var(--red)' : gap >= 2 ? 'var(--yellow)' : 'var(--green)';
+    return `<div class="gap-row">
+      <span class="gap-label" style="font-weight:600">${q.short}</span>
+      <div class="gap-scores">
+        ${teamMembers.map((name,mi) =>
+          `<span class="gap-badge" title="${name}">${name.charAt(0)}: ${teamScores[mi][qi]||'—'}</span>`
+        ).join('')}
+      </div>
+      ${gap >= 2 ? `<span style="font-size:11px;color:${gapColor};font-weight:700;">Gap: ${gap}</span>` : ''}
+    </div>`;
+  }).join('');
+}
+
+function setupChartTooltip(scores) {
+  const canvas = document.getElementById('main-canvas');
+  const tooltip = document.getElementById('chart-tooltip');
+  const W = canvas.width, H = canvas.height;
+  const cx = W/2, cy = H/2, R = W/2 - 60;
+  const N = 20;
+
+  const dotPositions = QUESTIONS.map((_,i) => {
+    const angle = (i / N) * Math.PI * 2 - Math.PI / 2;
+    return { x: cx + Math.cos(angle) * (R + 28), y: cy + Math.sin(angle) * (R + 28) };
+  });
+
+  function handleInteraction(e) {
+    const rect = canvas.getBoundingClientRect();
+    const scaleX = canvas.width / rect.width;
+    const scaleY = canvas.height / rect.height;
+    const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+    const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+    const mx = (clientX - rect.left) * scaleX;
+    const my = (clientY - rect.top) * scaleY;
+
+    let hit = -1;
+    dotPositions.forEach((pos, i) => {
+      const dx = mx - pos.x, dy = my - pos.y;
+      if (Math.sqrt(dx*dx+dy*dy) < 16) hit = i;
+    });
+
+    if (hit === -1) { tooltip.style.display = 'none'; return; }
+
+    const q = QUESTIONS[hit];
+    const cat = CATEGORIES[q.cat];
+    const score = scores[hit];
+    document.getElementById('tooltip-num').textContent = `Q${hit+1}`;
+    document.getElementById('tooltip-title').textContent = q.short;
+    document.getElementById('tooltip-cat').textContent = cat.label;
+    document.getElementById('tooltip-score').textContent = score ? `Score: ${score} — ${SCORE_LABELS[score]}` : 'Not scored';
+
+    const dispX = dotPositions[hit].x / scaleX;
+    const dispY = dotPositions[hit].y / scaleY;
+    const tipW = 220;
+    let left = dispX + 14;
+    if (left + tipW > rect.width) left = dispX - tipW - 14;
+    tooltip.style.left = left + 'px';
+    tooltip.style.top = Math.max(0, dispY - 30) + 'px';
+    tooltip.style.display = 'block';
+  }
+
+  if (canvas._tipHandler) {
+    canvas.removeEventListener('click', canvas._tipHandler);
+    canvas.removeEventListener('touchstart', canvas._tipHandler);
+  }
+  canvas._tipHandler = handleInteraction;
+  canvas.addEventListener('click', handleInteraction);
+  canvas.addEventListener('touchstart', handleInteraction, { passive: true });
+  document.addEventListener('click', function(e) {
+    if (e.target !== canvas) tooltip.style.display = 'none';
+  });
+}
+
+function renderChartLegend(scores) {
+  const el = document.getElementById('chart-legend');
+  el.innerHTML = QUESTIONS.map((q, i) => {
+    const cat = CATEGORIES[q.cat];
+    const score = scores[i];
+    const sCls = score >= 4 ? 'color:var(--green)' : score >= 3 ? 'color:#c9920a' : score > 0 ? 'color:var(--red)' : 'color:var(--gray-400)';
+    return `<div style="display:flex;align-items:center;gap:8px;padding:5px 8px;background:var(--gray-100);border-radius:6px;">
+      <span style="width:22px;height:22px;border-radius:50%;background:${cat.color};color:white;font-size:10px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;">${i+1}</span>
+      <span style="font-size:11px;color:var(--navy);flex:1;line-height:1.2;">${q.short}</span>
+      <span style="font-size:12px;font-weight:700;${sCls}">${score||'—'}</span>
+    </div>`;
+  }).join('');
+}
+
+// ══════════════════════════════════════════
+//  UTIL
+// ══════════════════════════════════════════
+
+function showScreen(id) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  window.scrollTo(0,0);
+}
+
+function restart() {
+  soloScores = new Array(20).fill(0);
+  teamMembers = [];
+  teamScores = [];
+  currentQ = 0;
+  document.getElementById('solo-name').value = '';
+  document.getElementById('church-name').value = '';
+  document.getElementById('church-name-team').value = '';
+  document.getElementById('team-members-list').innerHTML = '';
+  showScreen('screen-welcome');
+}
+
+// init mini chart
+drawMiniChart();
+
+// redraw main chart at print size before printing
+window.addEventListener('beforeprint', function() {
+  const canvas = document.getElementById('main-canvas');
+  if (!canvas) return;
+  canvas.width = 480; canvas.height = 480;
+  const scores = getEffectiveScores();
+  drawMainChart(scores);
+});
+window.addEventListener('afterprint', function() {
+  const canvas = document.getElementById('main-canvas');
+  if (!canvas) return;
+  canvas.width = 560; canvas.height = 560;
+  const scores = getEffectiveScores();
+  drawMainChart(scores);
+});
+</script>
+</body>
+</html>
